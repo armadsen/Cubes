@@ -10,6 +10,8 @@
 
 @interface ViewController ()
 
+@property (nonatomic, strong) SCNNode *cubeNode;
+
 @end
 
 @implementation ViewController
@@ -23,7 +25,6 @@
 
 - (void)setupScene
 {
-	self.sceneView.autoenablesDefaultLighting = YES;
 	self.sceneView.backgroundColor = [UIColor darkGrayColor];
 	
 	// Create the scene
@@ -44,16 +45,17 @@
 	cube.firstMaterial.diffuse.contents = [UIColor colorWithRed:0.149 green:0.604 blue:0.859 alpha:1.000];
 	SCNNode *cubeNode = [SCNNode nodeWithGeometry:cube];
 	[scene.rootNode addChildNode:cubeNode];
+	self.cubeNode = cubeNode;
 	
 	// Add an animation to the cube.
-	CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
-	animation.values = @[[NSValue valueWithSCNMatrix4:SCNMatrix4MakeRotation(0 * M_PI, 1, 1, 0.3)],
-						 [NSValue valueWithSCNMatrix4:SCNMatrix4MakeRotation(1 * M_PI, 1, 1, 0.3)],
-						[NSValue valueWithSCNMatrix4:SCNMatrix4MakeRotation(2 * M_PI, 1, 1, 0.3)]];
+	CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"rotation"];
+	animation.values = @[[NSValue valueWithSCNVector4:SCNVector4Make(1, 1, 0.3, 0 * M_PI)],
+						 [NSValue valueWithSCNVector4:SCNVector4Make(1, 1, 0.3, 1 * M_PI)],
+						[NSValue valueWithSCNVector4:SCNVector4Make(1, 1, 0.3, 2 * M_PI)]];
 	animation.duration = 5;
 	animation.repeatCount = HUGE_VALF;
-	
-	[cubeNode addAnimation:animation forKey:@"transform"];
+	[self.cubeNode addAnimation:animation forKey:@"rotation"];
+	self.cubeNode.paused = YES; // Start out paused
 	
 	self.sceneView.scene = scene;
 }
@@ -64,12 +66,7 @@
 	CGPoint touchPoint = [touch locationInView:self.sceneView];
 	SCNHitTestResult *hitTestResult = [[self.sceneView hitTest:touchPoint options:nil] firstObject];
 	SCNNode *hitNode = hitTestResult.node;
-	NSString *animationKey = @"transform";
-	if ([hitNode isAnimationForKeyPaused:animationKey]) {
-		[hitNode resumeAnimationForKey:animationKey];
-	} else {
-		[hitNode pauseAnimationForKey:animationKey];
-	}
+	hitNode.paused = !hitNode.paused;
 }
 
 @end
