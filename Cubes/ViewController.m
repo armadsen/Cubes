@@ -25,6 +25,7 @@
 
 - (void)setupScene
 {
+	// Configure the Scene View
 	self.sceneView.backgroundColor = [UIColor darkGrayColor];
 	
 	// Create the scene
