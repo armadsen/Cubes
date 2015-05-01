@@ -54,7 +54,7 @@
 	CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"rotation"];
 	animation.values = @[[NSValue valueWithSCNVector4:SCNVector4Make(1, 1, 0.3, 0 * M_PI)],
 						 [NSValue valueWithSCNVector4:SCNVector4Make(1, 1, 0.3, 1 * M_PI)],
-						 [NSValue valueWithSCNVector4:SCNVector4Make(1, 1, 0.3, 2 * M_PI)]];
+						[NSValue valueWithSCNVector4:SCNVector4Make(1, 1, 0.3, 2 * M_PI)]];
 	animation.duration = 5;
 	animation.repeatCount = HUGE_VALF;
 	[self.cubeNode addAnimation:animation forKey:@"rotation"];
@@ -81,14 +81,14 @@
 	SCNHitTestResult *hitTestResult = [[self.sceneView hitTest:touchPoint options:nil] firstObject];
 	SCNNode *hitNode = hitTestResult.node;
 	if (hitNode == self.cubeNode) {
-		hitNode.paused = !hitNode.paused;
+	hitNode.paused = !hitNode.paused;
 	} else {
 		// Pyramid node
 		if (hitNode.geometry.firstMaterial.emission.intensity == 0) {
 			hitNode.geometry.firstMaterial.emission.intensity = 1;
 		} else {
 			hitNode.geometry.firstMaterial.emission.intensity = 0;
-		}
+}
 	}
 }
 
