@@ -1,4 +1,4 @@
-This project is an app used to teach the basics of SceneKit at DevMountain on February 13, 2015.
+This project is an app I've used to teach the basics of SceneKit at DevMountain several times. Both Swift and Objective-C versions are available.
 
 Gists with copy/pasteable code blocks for following along can be found here: 
 Objective-C: https://gist.github.com/armadsen/6a72edf7becbb3fafb7e
