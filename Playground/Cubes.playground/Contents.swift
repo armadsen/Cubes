@@ -54,7 +54,9 @@ cube.firstMaterial?.diffuse.contents = [#Color(colorLiteralRed: 0.14901960784313
 let cubeNode = SCNNode(geometry: cube)
 scene.rootNode.addChildNode(cubeNode)
 
-// Add an animation to the cube.
+/*:
+SceneKit lets us animate elements of a scene using CoreAnimation. Let's add a rotation animation to our cube:
+*/
 let animation = CAKeyframeAnimation(keyPath: "rotation")
 animation.values = [NSValue(SCNVector4: SCNVector4(1, 1, 0.3, 0 * M_PI)),
                     NSValue(SCNVector4: SCNVector4(1, 1, 0.3, 1 * M_PI)),
@@ -67,6 +69,13 @@ cubeNode.paused = true // Start out paused
 sceneView.scene = scene
 XCPlaygroundPage.currentPage.liveView = sceneView
 
+/*:
+We can make the animation start and stop when the scene is tapped on. We'll attach a gesture recognizer to the
+scene view to receive taps. SceneKit makes it easy to figure out which node was tapped on using the `hitTest()`
+method.
+
+We create a TouchHandler class just so that we have a target for our gesture recognizer.
+*/
 class TouchHandler: NSObject {
 	func tapGestureRecognized(recognizer: UITapGestureRecognizer) {
 		guard let view = recognizer.view as? SCNView else { return }
