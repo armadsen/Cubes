@@ -64,6 +64,16 @@ animation.repeatCount = HUGE
 cubeNode.addAnimation(animation, forKey: "rotation")
 cubeNode.paused = true // Start out paused
 
+// Create a cone and place it in the scene
+let pyramid = SCNPyramid(width: 5, height: 5, length: 5)
+pyramid.firstMaterial?.diffuse.contents = [#Color(colorLiteralRed: 0.4776530861854553, green: 0.2292086482048035, blue: 0.9591622352600098, alpha: 1)#]
+pyramid.firstMaterial?.emission.contents = [#Color(colorLiteralRed: 0.7602152824401855, green: 0.7601925134658813, blue: 0.7602053880691528, alpha: 1)#]
+pyramid.firstMaterial?.emission.intensity = 0;
+let pyramidNode = SCNNode(geometry: pyramid)
+pyramidNode.position = SCNVector3(0, -10, 0);
+pyramidNode.rotation = SCNVector4(0, 1, 0, M_PI / 3.0);
+scene.rootNode.addChildNode(pyramidNode)
+
 sceneView.scene = scene
 XCPlaygroundPage.currentPage.liveView = sceneView
 
