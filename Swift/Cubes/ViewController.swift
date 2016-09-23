@@ -16,7 +16,7 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		self.setupScene()
+		setupScene()
 	}
 	
 	private var cubeNode: SCNNode?
@@ -24,7 +24,7 @@ class ViewController: UIViewController {
 	private func setupScene() {
 		
 		// Configure the Scene View
-		self.sceneView.backgroundColor = .darkGrayColor()
+		sceneView.backgroundColor = .darkGray
 		
 		// Create the scene
 		let scene = SCNScene()
@@ -48,24 +48,24 @@ class ViewController: UIViewController {
 		
 		// Add an animation to the cube.
 		let animation = CAKeyframeAnimation(keyPath: "rotation")
-		animation.values = [NSValue(SCNVector4: SCNVector4(1, 1, 0.3, 0 * M_PI)),
-		NSValue(SCNVector4: SCNVector4(1, 1, 0.3, 1 * M_PI)),
-		NSValue(SCNVector4: SCNVector4(1, 1, 0.3, 2 * M_PI))]
+		animation.values = [NSValue(scnVector4: SCNVector4(1, 1, 0.3, 0 * M_PI)),
+		NSValue(scnVector4: SCNVector4(1, 1, 0.3, 1 * M_PI)),
+		NSValue(scnVector4: SCNVector4(1, 1, 0.3, 2 * M_PI))]
 		animation.duration = 5
 		animation.repeatCount = HUGE
 		self.cubeNode?.addAnimation(animation, forKey: "rotation")
-		self.cubeNode?.paused = true // Start out paused
+		self.cubeNode?.isPaused = true // Start out paused
 		
-		self.sceneView.scene = scene
+		sceneView.scene = scene
 	}
 
-	override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 		
 		let touch = touches.first
-		if let touchPoint = touch?.locationInView(self.sceneView),
-		hitTestResult = self.sceneView.hitTest(touchPoint, options: nil).first {
+		if let touchPoint = touch?.location(in: sceneView),
+		let hitTestResult = sceneView.hitTest(touchPoint, options: nil).first {
 			let hitNode = hitTestResult.node
-			hitNode.paused = !hitNode.paused
+			hitNode.isPaused = !hitNode.isPaused
 		}
 		
 	}
