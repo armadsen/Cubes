@@ -12,7 +12,7 @@ import SceneKit
 class ViewController: UIViewController {
 	
 	@IBOutlet var sceneView: SCNView!
-
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -48,9 +48,9 @@ class ViewController: UIViewController {
 		
 		// Add an animation to the cube.
 		let animation = CAKeyframeAnimation(keyPath: "rotation")
-		animation.values = [NSValue(scnVector4: SCNVector4(1, 1, 0.3, 0 * M_PI)),
-		NSValue(scnVector4: SCNVector4(1, 1, 0.3, 1 * M_PI)),
-		NSValue(scnVector4: SCNVector4(1, 1, 0.3, 2 * M_PI))]
+		animation.values = [SCNVector4(1, 1, 0.3, 0 * .pi),
+		                    SCNVector4(1, 1, 0.3, 1 * .pi),
+		                    SCNVector4(1, 1, 0.3, 2 * .pi)]
 		animation.duration = 5
 		animation.repeatCount = HUGE
 		self.cubeNode?.addAnimation(animation, forKey: "rotation")
@@ -58,12 +58,12 @@ class ViewController: UIViewController {
 		
 		sceneView.scene = scene
 	}
-
+	
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 		
 		let touch = touches.first
 		if let touchPoint = touch?.location(in: sceneView),
-		let hitTestResult = sceneView.hitTest(touchPoint, options: nil).first {
+			let hitTestResult = sceneView.hitTest(touchPoint, options: nil).first {
 			let hitNode = hitTestResult.node
 			hitNode.isPaused = !hitNode.isPaused
 		}
