@@ -2,7 +2,7 @@
 
 import Cocoa
 import SceneKit
-import XCPlayground
+import PlaygroundSupport
 
 // This just makes it so we can write the code exactly as we would on iOS.
 typealias UITapGestureRecognizer = NSClickGestureRecognizer
@@ -19,7 +19,7 @@ let sceneView = SCNView(frame: CGRect(x: 0, y: 0, width: 400, height: 400))
 /*:
 Configure the Scene View
 */
-sceneView.backgroundColor = [#Color(colorLiteralRed: 0.1956433057785034, green: 0.2113749980926514, blue: 0.2356699705123901, alpha: 1)#]
+sceneView.backgroundColor = #colorLiteral(red: 0.1956433057785034, green: 0.2113749980926514, blue: 0.2356699705123901, alpha: 1)
 sceneView.autoenablesDefaultLighting = true
 
 /*:
@@ -50,7 +50,7 @@ scene.rootNode.addChildNode(cameraNode)
 Now we're ready to create an object that we can actually see. Let's create a cube using the `SCNBox` class. We'll place it in the scene by createing a node for it, too.
 */
 let cube = SCNBox(width: 5, height: 5, length: 5, chamferRadius: 0)
-cube.firstMaterial?.diffuse.contents = [#Color(colorLiteralRed: 0.1490196078431373, green: 0.6039215686274509, blue: 0.8588235294117647, alpha: 1)#]
+cube.firstMaterial?.diffuse.contents = #colorLiteral(red: 0.1490196078431373, green: 0.6039215686274509, blue: 0.8588235294117647, alpha: 1)
 let cubeNode = SCNNode(geometry: cube)
 scene.rootNode.addChildNode(cubeNode)
 
@@ -58,16 +58,16 @@ scene.rootNode.addChildNode(cubeNode)
 SceneKit lets us animate elements of a scene using CoreAnimation. Let's add a rotation animation to our cube:
 */
 let animation = CAKeyframeAnimation(keyPath: "rotation")
-animation.values = [NSValue(SCNVector4: SCNVector4(1, 1, 0.3, 0 * M_PI)),
-                    NSValue(SCNVector4: SCNVector4(1, 1, 0.3, 1 * M_PI)),
-                    NSValue(SCNVector4: SCNVector4(1, 1, 0.3, 2 * M_PI))]
+animation.values = [SCNVector4(1, 1, 0.3, 0 * M_PI),
+                    SCNVector4(1, 1, 0.3, 1 * M_PI),
+                    SCNVector4(1, 1, 0.3, 2 * M_PI)]
 animation.duration = 5
 animation.repeatCount = HUGE
 cubeNode.addAnimation(animation, forKey: "rotation")
-cubeNode.paused = true // Start out paused
+cubeNode.isPaused = true // Start out paused
 
 sceneView.scene = scene
-XCPlaygroundPage.currentPage.liveView = sceneView
+PlaygroundPage.current.liveView = sceneView
 
 /*:
 We can make the animation start and stop when the scene is tapped on. We'll attach a gesture recognizer to the
@@ -77,11 +77,11 @@ method.
 We create a TouchHandler class just so that we have a target for our gesture recognizer.
 */
 class TouchHandler: NSObject {
-	func tapGestureRecognized(recognizer: UITapGestureRecognizer) {
+	func tapGestureRecognized(_ recognizer: UITapGestureRecognizer) {
 		guard let view = recognizer.view as? SCNView else { return }
-		let touchPoint = recognizer.locationInView(view)
+		let touchPoint = recognizer.location(in: view)
 		if let hitNode = view.hitTest(touchPoint, options: nil).first?.node {
-			hitNode.paused = !hitNode.paused
+			hitNode.isPaused = !hitNode.isPaused
 		}
 	}
 }
