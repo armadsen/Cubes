@@ -58,9 +58,9 @@ scene.rootNode.addChildNode(cubeNode)
 SceneKit lets us animate elements of a scene using CoreAnimation. Let's add a rotation animation to our cube:
 */
 let animation = CAKeyframeAnimation(keyPath: "rotation")
-animation.values = [SCNVector4(1, 1, 0.3, 0 * M_PI),
-                    SCNVector4(1, 1, 0.3, 1 * M_PI),
-                    SCNVector4(1, 1, 0.3, 2 * M_PI)]
+animation.values = [SCNVector4(1, 1, 0.3, 0 * .pi),
+                    SCNVector4(1, 1, 0.3, 1 * .pi),
+                    SCNVector4(1, 1, 0.3, 2 * .pi)]
 animation.duration = 5
 animation.repeatCount = HUGE
 cubeNode.addAnimation(animation, forKey: "rotation")
