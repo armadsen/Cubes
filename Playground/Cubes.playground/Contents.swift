@@ -77,7 +77,7 @@ method.
 We create a TouchHandler class just so that we have a target for our gesture recognizer.
 */
 class TouchHandler: NSObject {
-	func tapGestureRecognized(_ recognizer: UITapGestureRecognizer) {
+	@objc func tapGestureRecognized(_ recognizer: UITapGestureRecognizer) {
 		guard let view = recognizer.view as? SCNView else { return }
 		let touchPoint = recognizer.location(in: view)
 		if let hitNode = view.hitTest(touchPoint, options: nil).first?.node {
